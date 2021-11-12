@@ -20,6 +20,8 @@ protected:
 
 	// Updates all points according to the matrix
 	void UpdatePointsToMatrix(matrix::Matrix3x3& matrix);
+	// Updates center position of the shape
+	void UpdateCenterPositionOfTheShape();
 
 	// Forms shape
 	virtual void Form() = 0;
@@ -27,24 +29,26 @@ public:
 	// Consturctor
 	BaseShape() { Scale(sf::Vector2f(1, 1)); }
 
+	// Return center position
+	sf::Vector2f GetCenterPosition() const { return _centerPosition; }
 	// Returns scale
 	sf::Vector2f GetScale() const { return _scale; }
 	// Gets shape thickness
 	float GetThickness() const { return _thickness; }
 
 	// Sets position
-	void SetPosition(sf::Vector2f pos);
+	virtual void SetPosition(sf::Vector2f pos);
 	// Move shape
-	void Move(sf::Vector2f vector);
+	virtual void Move(sf::Vector2f vector);
 	// Rotates shape around it center point
-	void Rotate(float degrees);
+	virtual void Rotate(float degrees);
 	// Rotates shape around specific point
-	void Rotate(float degrees, sf::Vector2f point);
+	virtual void Rotate(float degrees, sf::Vector2f point);
 	// Scale shape
-	void Scale(sf::Vector2f scaleVector);
+	virtual void Scale(sf::Vector2f scaleVector);
 	// Shear shape
-	void Shear(sf::Vector2f shearVector);
+	virtual void Shear(sf::Vector2f shearVector);
 
 	// Draws shape
-	void Draw(sf::RenderWindow* window);
+	virtual void Draw(sf::RenderWindow* window);
 };

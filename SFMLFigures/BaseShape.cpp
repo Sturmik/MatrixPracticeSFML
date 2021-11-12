@@ -9,8 +9,24 @@ void BaseShape::UpdatePointsToMatrix(matrix::Matrix3x3& matrix)
 		// Update points according to matrix
 		matrix::Forward(matrix, _points[i].GetShape().getPosition().x,
 			_points[i].GetShape().getPosition().y, nx, ny);
+		// Set new position
 		_points[i].GetShape().setPosition(sf::Vector2f(nx, ny));
 	}
+	UpdateCenterPositionOfTheShape();
+}
+
+// Updates center position of the shape
+void BaseShape::UpdateCenterPositionOfTheShape()
+{
+	if (_points.size() == 0) { return; }
+	double centerX, centerY; centerX = centerY = 0;
+	for (int i = 0; i < _points.size(); i++)
+	{
+		centerX += _points[i].GetShape().getPosition().x;
+		centerY += _points[i].GetShape().getPosition().y;
+	}
+	_centerPosition.x = centerX / _points.size();
+	_centerPosition.y = centerY / _points.size();
 }
 
 // Sets position
@@ -19,20 +35,18 @@ void BaseShape::SetPosition(sf::Vector2f pos)
 	// Translate matrix
 	Move(sf::Vector2f(pos.x - _centerPosition.x, pos.y - _centerPosition.y));
 }
+
 // Move shape
 void BaseShape::Move(sf::Vector2f vector)
 {
-	// Update shape position
-	_centerPosition = sf::Vector2f(_centerPosition.x + vector.x, _centerPosition.y + vector.y);
 	// Declare matrixes
 	matrix::Matrix3x3 translateMatrix;
-	// Identity matrix
-	matrix::Identity(translateMatrix);
 	// Get translation matrix
 	matrix::Translate(translateMatrix, vector.x, vector.y);
 	// Update points
 	UpdatePointsToMatrix(translateMatrix);
 }
+
 // Rotates shape around it center point
 void BaseShape::Rotate(float degrees)
 {
@@ -42,9 +56,6 @@ void BaseShape::Rotate(float degrees)
 	SetPosition(sf::Vector2f(0, 0));
 	// Declare matrixes
 	matrix::Matrix3x3 translateMatrix, rotateMatrix, resultMatrix;
-	// Identity matrix
-	matrix::Identity(translateMatrix);
-	matrix::Identity(rotateMatrix);
 	// Get translation matrix
 	matrix::Translate(translateMatrix, centerPositionBuff.x, centerPositionBuff.y);
 	// Get translation matrix
@@ -53,38 +64,42 @@ void BaseShape::Rotate(float degrees)
 	matrix::MatrixMultiply(resultMatrix, translateMatrix, rotateMatrix);
 	// Update points
 	UpdatePointsToMatrix(resultMatrix);
-	// Update position
-	_centerPosition = centerPositionBuff;
 }
+
 // Rotates shape around specific point
 void BaseShape::Rotate(float degrees, sf::Vector2f point)
 {
+	// Save our recent center position
+	sf::Vector2f centerPositionTemp;
+	centerPositionTemp.x = _centerPosition.x - point.x;
+	centerPositionTemp.y = _centerPosition.y - point.y;
+	// Set position to zero
+	SetPosition(sf::Vector2f(0, 0));
 	// Declare matrixes
-	matrix::Matrix3x3 translateMatrix, rotateMatrix, resultMatrix;
-	// Identity matrix
-	matrix::Identity(translateMatrix);
-	matrix::Identity(rotateMatrix);
+	matrix::Matrix3x3 translateMatrix, rotateMatrix, translateRotateMatrix, translateBackMatrix, resultMatrix;
 	// Get translation matrix
 	matrix::Translate(translateMatrix, point.x, point.y);
 	// Get translation matrix
 	matrix::Rotate(rotateMatrix, degrees);
-	// Get result matrix
-	matrix::MatrixMultiply(resultMatrix, rotateMatrix, translateMatrix);
+	// Get translate rotate matrix
+	matrix::MatrixMultiply(translateRotateMatrix, translateMatrix, rotateMatrix);
+	// Get translate back matrix
+	matrix::Translate(translateBackMatrix, centerPositionTemp.x, centerPositionTemp.y);
+	// Update result matrix
+	matrix::MatrixMultiply(resultMatrix, translateRotateMatrix, translateBackMatrix);
 	// Update points
 	UpdatePointsToMatrix(resultMatrix);
 }
+
 // Scale shape
 void BaseShape::Scale(sf::Vector2f scaleVector)
 {
-	// Save our recent center position
+	// Remember  recent center position
 	sf::Vector2f centerPositionBuff = _centerPosition;
 	// Set position to zero
 	SetPosition(sf::Vector2f(0, 0));
 	// Declare matrixes
 	matrix::Matrix3x3 translateMatrix, scaleMatrix, resultMatrix;
-	// Identity matrix
-	matrix::Identity(translateMatrix);
-	matrix::Identity(scaleMatrix);
 	// Get translation matrix
 	matrix::Translate(translateMatrix, centerPositionBuff.x, centerPositionBuff.y);
 	// Get scale matrix
@@ -99,9 +114,8 @@ void BaseShape::Scale(sf::Vector2f scaleVector)
 	}
 	// Update points
 	UpdatePointsToMatrix(resultMatrix);
-	// Update position
-	_centerPosition = centerPositionBuff;
 }
+
 // Shear shape
 void BaseShape::Shear(sf::Vector2f shearVector)
 {
@@ -111,9 +125,6 @@ void BaseShape::Shear(sf::Vector2f shearVector)
 	SetPosition(sf::Vector2f(0, 0));
 	// Declare matrixes
 	matrix::Matrix3x3 translateMatrix, shearMatrix, resultMatrix;
-	// Identity matrix
-	matrix::Identity(translateMatrix);
-	matrix::Identity(shearMatrix);
 	// Get translation matrix
 	matrix::Translate(translateMatrix, centerPositionBuff.x, centerPositionBuff.y);
 	// Get scale matrix
@@ -128,8 +139,6 @@ void BaseShape::Shear(sf::Vector2f shearVector)
 	}
 	// Update points
 	UpdatePointsToMatrix(resultMatrix);
-	// Update position
-	_centerPosition = centerPositionBuff;
 }
 
 // Draws shape

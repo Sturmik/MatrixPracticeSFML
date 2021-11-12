@@ -13,5 +13,5 @@ private:
 	// Sets radius
 	void SetCircle(float thickness = 1, float radius = 1);
 public:
-	Circle(float thickness, float radius) { _thickness = thickness; _radius = radius; Form(); }
+	Circle(float thickness, float radius) {_thickness = thickness; _radius = radius; Form(); }
 };

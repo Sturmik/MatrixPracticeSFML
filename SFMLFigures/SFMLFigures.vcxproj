@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClCompile Include="BaseShape.cpp" />
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="Line.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="BaseShape.h" />
     <ClInclude Include="Point.h" />
