@@ -85,9 +85,9 @@ void BaseShape::Rotate(float degrees, sf::Vector2f point)
 	// Convert degrees to radians
 	float radians = DegreesToRadians(degrees);
 	// Save our recent center position
-	sf::Vector2f centerPositionTemp;
-	centerPositionTemp.x = _centerPosition.x - point.x;
-	centerPositionTemp.y = _centerPosition.y - point.y;
+	sf::Vector2f centerPositionAfterRotation;
+	centerPositionAfterRotation.x = _centerPosition.x - point.x;
+	centerPositionAfterRotation.y = _centerPosition.y - point.y;
 	// Set position to zero
 	SetPosition(sf::Vector2f(0, 0));
 	// Declare matrixes
@@ -99,7 +99,7 @@ void BaseShape::Rotate(float degrees, sf::Vector2f point)
 	// Get translate rotate matrix
 	matrix::MatrixMultiply(translateRotateMatrix, translateMatrix, rotateMatrix);
 	// Get translate back matrix
-	matrix::Translate(translateBackMatrix, centerPositionTemp.x, centerPositionTemp.y);
+	matrix::Translate(translateBackMatrix, centerPositionAfterRotation.x, centerPositionAfterRotation.y);
 	// Update result matrix
 	matrix::MatrixMultiply(resultMatrix, translateRotateMatrix, translateBackMatrix);
 	// Update points

@@ -1,7 +1,17 @@
 #include "Line.h"
 
-void Line::Form()
-{ 
+float Line::GetMagnitude()
+{
+	if (_points.size() == 0) { return 0; }
+	return _points[0].Distance(_points[_points.size() - 1]);
+}
+
+void Line::CreateLine(float magnitude)
+{	
+	// Clear all previous points
+	_points.clear();
+	
+	// Declare variables
 	float x, y;
 	x = 0;
 	y = 0;
@@ -15,11 +25,11 @@ void Line::Form()
 		newPoint.GetShape().setPosition(x, y);
 		newPoint.SetSize(_thickness);
 		// If we reached end point - exit the cycle
-		if (x >= _magnitude)
+		if (x >= magnitude)
 		{
 			break;
 		}
-		if (x < _magnitude)
+		if (x < magnitude)
 		{
 			x += step * _thickness;
 		}

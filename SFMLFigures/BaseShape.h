@@ -27,12 +27,14 @@ protected:
 	void UpdatePointsToMatrix(matrix::Matrix3x3& matrix);
 	// Updates center position of the shape
 	void UpdateCenterPositionOfTheShape();
-
-	// Forms shape
-	virtual void Form() = 0;
 public:
 	// Consturctor
-	BaseShape(float thickness) { Scale(sf::Vector2f(1, 1)); _thickness = thickness; }
+	BaseShape(float thickness)
+	{
+		if (thickness < 0){ thickness = 1;}
+		Scale(sf::Vector2f(1, 1));
+		_thickness = thickness; 
+	}
 
 	// Get all points
 	std::vector<Point>& GetPoints() { return _points; }

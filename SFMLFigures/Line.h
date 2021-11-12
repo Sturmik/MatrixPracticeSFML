@@ -6,14 +6,15 @@
 class Line : public BaseShape
 {
 private:
-	// Line magnitude
-	int _magnitude;
-	// Forms shape
-	virtual void Form() override;
+	// Creates line
+	void CreateLine(float magnitude);
 public:
-	Line(int magnitude, float thickness) : BaseShape(thickness)
+	// Gets line magnitude
+	float GetMagnitude();
+	// Constructor
+	Line(float magnitude, float thickness) : BaseShape(thickness)
 	{
-		_magnitude = magnitude;
-		Form();
+		if (magnitude < 0) { magnitude = 1; }
+		CreateLine(magnitude);
 	}
 };

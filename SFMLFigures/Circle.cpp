@@ -1,11 +1,16 @@
 #include "Circle.h"
 
-void Circle::SetCircle(float thickness, float radius)
+float Circle::GetRadius() 
 {
-	// Set thickness and radius
-	this->_thickness = thickness;
-	this->_radius = radius;
+	if (_points.size() == 0) { return 0; }
+	return _points[0].Distance(_centerPosition);
+}
+
+void Circle::CreateCircle(float radius)
+{
+	// Clear all previous points
 	_points.clear();
+
 	// Precalculate radius
 	float sqrSquare = radius * radius;
 	for (float x = -radius; x <= radius; x += radius /  150)
@@ -14,7 +19,7 @@ void Circle::SetCircle(float thickness, float radius)
 		sf::Vector2f pos(x - _centerPosition.x, sqrt(sqrSquare - x * x) - _centerPosition.y);
 		// Point forming
 		Point point; 
-		point.SetSize(thickness);
+		point.SetSize(_thickness);
 		// Top point
 		point.GetShape().setPosition(pos);
 		_points.push_back(point);
@@ -28,7 +33,7 @@ void Circle::SetCircle(float thickness, float radius)
 		sf::Vector2f pos(sqrt(sqrSquare - y * y),y - _centerPosition.y);
 		// Point forming
 		Point point;
-		point.SetSize(thickness);
+		point.SetSize(_thickness);
 		// Top point
 		point.GetShape().setPosition(pos);
 		_points.push_back(point);
@@ -36,9 +41,4 @@ void Circle::SetCircle(float thickness, float radius)
 		point.GetShape().setPosition(-pos.x, y);
 		_points.push_back(point);
 	}
-}
-
-void Circle::Form()
-{
-	SetCircle(_thickness, _radius);
 }

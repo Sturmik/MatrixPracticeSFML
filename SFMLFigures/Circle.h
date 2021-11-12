@@ -6,16 +6,15 @@
 class Circle : public BaseShape
 {
 private:
-	// Radius
-	float _radius;
-	// Forms shape
-	virtual void Form() override;
-	// Sets radius
-	void SetCircle(float thickness = 1, float radius = 1);
+	// Creates circle
+	void CreateCircle(float radius);
 public:
+	// Get circle radius
+	float GetRadius();
+	// Constructor
 	Circle(float thickness, float radius) : BaseShape(thickness)
 	{
-		_radius = radius; 
-		Form(); 
+		if (radius < 0) { radius = 1; }
+		CreateCircle(radius);
 	}
 };
