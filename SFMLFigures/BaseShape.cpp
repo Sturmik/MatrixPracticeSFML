@@ -1,5 +1,16 @@
 #include "BaseShape.h"
 
+// Converts degrees to radians
+float DegreesToRadians(float degrees)
+{
+	return  degrees * 0.0174533;
+}
+// Converts radians to degrees
+float RadiansToDegrees(float radians)
+{
+	return radians * 57, 2958;
+}
+
 // Updates all points according to the matrix
 void BaseShape::UpdatePointsToMatrix(matrix::Matrix3x3& matrix)
 {
@@ -50,6 +61,8 @@ void BaseShape::Move(sf::Vector2f vector)
 // Rotates shape around it center point
 void BaseShape::Rotate(float degrees)
 {
+	// Convert degrees to radians
+	float radians = DegreesToRadians(degrees);
 	// Save our recent center position
 	sf::Vector2f centerPositionBuff = _centerPosition;
 	// Set position to zero
@@ -59,7 +72,7 @@ void BaseShape::Rotate(float degrees)
 	// Get translation matrix
 	matrix::Translate(translateMatrix, centerPositionBuff.x, centerPositionBuff.y);
 	// Get translation matrix
-	matrix::Rotate(rotateMatrix, degrees);
+	matrix::Rotate(rotateMatrix, radians);
 	// Update result matrix
 	matrix::MatrixMultiply(resultMatrix, translateMatrix, rotateMatrix);
 	// Update points
@@ -69,6 +82,8 @@ void BaseShape::Rotate(float degrees)
 // Rotates shape around specific point
 void BaseShape::Rotate(float degrees, sf::Vector2f point)
 {
+	// Convert degrees to radians
+	float radians = DegreesToRadians(degrees);
 	// Save our recent center position
 	sf::Vector2f centerPositionTemp;
 	centerPositionTemp.x = _centerPosition.x - point.x;
@@ -80,7 +95,7 @@ void BaseShape::Rotate(float degrees, sf::Vector2f point)
 	// Get translation matrix
 	matrix::Translate(translateMatrix, point.x, point.y);
 	// Get translation matrix
-	matrix::Rotate(rotateMatrix, degrees);
+	matrix::Rotate(rotateMatrix, radians);
 	// Get translate rotate matrix
 	matrix::MatrixMultiply(translateRotateMatrix, translateMatrix, rotateMatrix);
 	// Get translate back matrix

@@ -2,6 +2,7 @@
 
 #include "Circle.h"
 #include "Line.h"
+#include "Rectangle.h"
 
 int main()
 {
@@ -14,12 +15,14 @@ int main()
     Line line1(300, 5), line2(250,5);
     line1.SetPosition(sf::Vector2f(700, 300));
     line2.SetPosition(sf::Vector2f(300, 300));
+    Rectangle rect(300, 150, 5);
+    rect.SetPosition(sf::Vector2f(300, 300));
     // Delta time
     sf::Clock deltaClock;
     sf::Time deltaTime = deltaClock.restart();
     // Movement movementSpeed
     float movementSpeed = 85;
-    float rotateSpeed = 0.5;
+    float rotateSpeed = 45;
     // Window cycle
     while (window.isOpen())
     {
@@ -43,38 +46,44 @@ int main()
             {
                 circ.Move(sf::Vector2f(0, -movementSpeed * deltaTime.asSeconds()));
                 line1.Move(sf::Vector2f(0, -movementSpeed * deltaTime.asSeconds()));
-                line2.Move(sf::Vector2f(0, movementSpeed * deltaTime.asSeconds()));
+                line2.Move(sf::Vector2f(0, -movementSpeed * deltaTime.asSeconds()));
+                rect.Move(sf::Vector2f(0, -movementSpeed * deltaTime.asSeconds()));
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
             {
                 circ.Move(sf::Vector2f(0, movementSpeed * deltaTime.asSeconds()));
                 line1.Move(sf::Vector2f(0, movementSpeed * deltaTime.asSeconds()));
                 line2.Move(sf::Vector2f(0, movementSpeed * deltaTime.asSeconds()));
+                rect.Move(sf::Vector2f(0, movementSpeed * deltaTime.asSeconds()));
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
             {
                 circ.Move(sf::Vector2f(-movementSpeed * deltaTime.asSeconds(), 0));
                 line1.Move(sf::Vector2f(-movementSpeed * deltaTime.asSeconds(), 0));
                 line2.Move(sf::Vector2f(-movementSpeed * deltaTime.asSeconds(), 0));
+                rect.Move(sf::Vector2f(-movementSpeed * deltaTime.asSeconds(), 0));
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
             {
                 circ.Move(sf::Vector2f(movementSpeed * deltaTime.asSeconds(), 0));
                 line1.Move(sf::Vector2f(movementSpeed * deltaTime.asSeconds(), 0));
                 line2.Move(sf::Vector2f(movementSpeed * deltaTime.asSeconds(), 0));
+                rect.Move(sf::Vector2f(movementSpeed * deltaTime.asSeconds(), 0));
             }
             // Rotating
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
             {
-                circ.Rotate(rotateSpeed * deltaTime.asSeconds(), line1.GetCenterPosition());
-                line1.Rotate(rotateSpeed * deltaTime.asSeconds(), circ.GetCenterPosition());
-                line2.Rotate(rotateSpeed * deltaTime.asSeconds(), circ.GetCenterPosition());
+                circ.Rotate(rotateSpeed * deltaTime.asSeconds(), rect.GetCenterPosition());
+                line1.Rotate(rotateSpeed * deltaTime.asSeconds(), line2.GetCenterPosition());
+                line2.Rotate(rotateSpeed * deltaTime.asSeconds(), line1.GetCenterPosition());
+                rect.Rotate(rotateSpeed * deltaTime.asSeconds(), circ.GetCenterPosition());
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
             {
-                circ.Rotate(-rotateSpeed * deltaTime.asSeconds(), line1.GetCenterPosition());
-                line1.Rotate(-rotateSpeed * deltaTime.asSeconds(), circ.GetCenterPosition());
-                line2.Rotate(-rotateSpeed * deltaTime.asSeconds(), circ.GetCenterPosition());
+                circ.Rotate(-rotateSpeed * deltaTime.asSeconds(), rect.GetCenterPosition());
+                line1.Rotate(-rotateSpeed * deltaTime.asSeconds(), line2.GetCenterPosition());
+                line2.Rotate(-rotateSpeed * deltaTime.asSeconds(), line1.GetCenterPosition());
+                rect.Rotate(-rotateSpeed * deltaTime.asSeconds(), circ.GetCenterPosition());
             }
             // Scaling
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
@@ -82,12 +91,14 @@ int main()
                 circ.Scale(sf::Vector2f(1.1, 1.1));
                 line1.Scale(sf::Vector2f(1.1, 1.1));
                 line2.Scale(sf::Vector2f(1.1, 1.1));
+                rect.Scale(sf::Vector2f(1.1, 1.1));
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
             {
                 circ.Scale(sf::Vector2f(0.9, 0.9));
                 line1.Scale(sf::Vector2f(0.9, 0.9));
                 line2.Scale(sf::Vector2f(0.9, 0.9));
+                rect.Scale(sf::Vector2f(0.9, 0.9));
             }
         }
         // Window clear
@@ -97,6 +108,7 @@ int main()
         circ.Draw(&window);
         line1.Draw(&window);
         line2.Draw(&window);
+        rect.Draw(&window);
 
         // Window display
         window.display();

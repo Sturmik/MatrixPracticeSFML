@@ -5,6 +5,11 @@
 // Include matrix for operations with shape
 #include "Matrix.h"
 
+// Converts degrees to radians
+float DegreesToRadians(float degrees);
+// Converts radians to degrees
+float RadiansToDegrees(float radians);
+
 // Abstract base shape builder
 class BaseShape
 {
@@ -27,8 +32,10 @@ protected:
 	virtual void Form() = 0;
 public:
 	// Consturctor
-	BaseShape() { Scale(sf::Vector2f(1, 1)); }
+	BaseShape(float thickness) { Scale(sf::Vector2f(1, 1)); _thickness = thickness; }
 
+	// Get all points
+	std::vector<Point>& GetPoints() { return _points; }
 	// Return center position
 	sf::Vector2f GetCenterPosition() const { return _centerPosition; }
 	// Returns scale

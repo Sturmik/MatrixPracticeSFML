@@ -11,10 +11,9 @@ private:
 	// Forms shape
 	virtual void Form() override;
 public:
-	Line(int magnitude, float thickness)
+	Line(int magnitude, float thickness) : BaseShape(thickness)
 	{
 		_magnitude = magnitude;
-		_thickness = thickness;
 		Form();
 	}
 };
