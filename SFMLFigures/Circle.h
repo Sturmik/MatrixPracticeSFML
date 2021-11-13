@@ -12,7 +12,7 @@ public:
 	// Get circle radius
 	float GetRadius();
 	// Constructor
-	Circle(float thickness, float radius) : BaseShape(thickness)
+	Circle(float radius, float thickness) : BaseShape(thickness)
 	{
 		if (radius < 0) { radius = 1; }
 		CreateCircle(radius);

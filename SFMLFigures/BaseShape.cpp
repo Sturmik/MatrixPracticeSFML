@@ -5,6 +5,7 @@ float DegreesToRadians(float degrees)
 {
 	return  degrees * 0.0174533;
 }
+
 // Converts radians to degrees
 float RadiansToDegrees(float radians)
 {

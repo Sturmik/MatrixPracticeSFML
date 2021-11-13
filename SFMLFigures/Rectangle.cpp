@@ -41,4 +41,7 @@ void Rectangle::CreateRectangle(float width, float height)
 	_leftTopPoint = &top.GetPoints()[0];
 	_rightTopPoint = &top.GetPoints()[top.GetPoints().size() - 1];
 	_leftBottomPoint = &bottom.GetPoints()[0];
+
+	// Update center position
+	UpdateCenterPositionOfTheShape();
 }

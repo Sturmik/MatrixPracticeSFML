@@ -17,5 +17,6 @@ public:
 		if (disclosure—oefficient < 0) { disclosure—oefficient = 1; }
 		if (xBorder < 0) { xBorder = 1; }
 		CreateParaboloid(disclosure—oefficient, xBorder);
+		UpdateCenterPositionOfTheShape();
 	}
 };

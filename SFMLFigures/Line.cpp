@@ -34,5 +34,7 @@ void Line::CreateLine(float magnitude)
 			x += step * _thickness;
 		}
 	}
-	_centerPosition.x = _points[_points.size() - 1].GetShape().getPosition().x / 2;
+
+	// Update center position
+	UpdateCenterPositionOfTheShape();
 }

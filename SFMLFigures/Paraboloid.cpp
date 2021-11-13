@@ -11,7 +11,7 @@ void Paraboloid::CreateParaboloid(float disclosureCoefficient, float xBorder)
 	// Clear all previous points
 	_points.clear();
 	// Form the parabaloid
-	for (float x = -xBorder; x <= xBorder; x += xBorder / 150)
+	for (float x = -xBorder; x <= xBorder; x += xBorder / xBorder / 3)
 	{
 		// Point forming
 		Point point;
@@ -20,4 +20,6 @@ void Paraboloid::CreateParaboloid(float disclosureCoefficient, float xBorder)
 		point.GetShape().setPosition(x, pow(x/disclosureCoefficient,2));
 		_points.push_back(point);
 	}
+	// Update center position
+	UpdateCenterPositionOfTheShape();
 }

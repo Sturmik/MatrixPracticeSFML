@@ -13,7 +13,7 @@ void Circle::CreateCircle(float radius)
 
 	// Precalculate radius
 	float sqrSquare = radius * radius;
-	for (float x = -radius; x <= radius; x += radius /  150)
+	for (float x = -radius; x <= radius; x += radius / radius / 3)
 	{
 		// Position
 		sf::Vector2f pos(x - _centerPosition.x, sqrt(sqrSquare - x * x) - _centerPosition.y);
@@ -27,7 +27,7 @@ void Circle::CreateCircle(float radius)
 		point.GetShape().setPosition(x, -pos.y);
 		_points.push_back(point);
 	}
-	for (float y = -radius; y <= radius; y += radius / 150)
+	for (float y = -radius; y <= radius; y += radius / radius / 3)
 	{
 		// Position
 		sf::Vector2f pos(sqrt(sqrSquare - y * y),y - _centerPosition.y);
@@ -41,4 +41,8 @@ void Circle::CreateCircle(float radius)
 		point.GetShape().setPosition(-pos.x, y);
 		_points.push_back(point);
 	}
+
+
+	// Update center position
+	UpdateCenterPositionOfTheShape();
 }
