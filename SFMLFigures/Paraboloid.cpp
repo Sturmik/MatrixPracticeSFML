@@ -11,7 +11,7 @@ void Paraboloid::CreateParaboloid(float disclosureCoefficient, float xBorder)
 	// Clear all previous points
 	_points.clear();
 	// Form the parabaloid
-	for (float x = -xBorder; x <= xBorder; x += xBorder / xBorder / 3)
+	for (float x = -xBorder; x <= xBorder; x += xBorder / xBorder / 2)
 	{
 		// Point forming
 		Point point;

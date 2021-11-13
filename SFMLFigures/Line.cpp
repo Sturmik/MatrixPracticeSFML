@@ -35,6 +35,10 @@ void Line::CreateLine(float magnitude)
 		}
 	}
 
+	// Set points
+	_startPoint = &_points[0];
+	_endPoint = &_points[_points.size() - 1];
+
 	// Update center position
 	UpdateCenterPositionOfTheShape();
 }

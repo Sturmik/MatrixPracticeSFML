@@ -19,6 +19,10 @@ void Leaf::CreateLeaf(float disclosure—oefficient, float xBorder)
     _points.insert(_points.end(), topParab.GetPoints().begin(), topParab.GetPoints().end());
     _points.insert(_points.end(), bottomParab.GetPoints().begin(), bottomParab.GetPoints().end());
 
+    // Update pointer values
+    _topCentralPoint = &_points[(topParab.GetPoints().size() / 2) - 1];
+    _bottomCentralPoint = &_points[topParab.GetPoints().size() + (bottomParab.GetPoints().size() / 2)];
+
     // Update center position
     UpdateCenterPositionOfTheShape();
 }

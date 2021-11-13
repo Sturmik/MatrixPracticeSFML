@@ -3,13 +3,21 @@
 float Rectangle::GetTopSideLength()
 {
 	if (_leftTopPoint == nullptr || _rightTopPoint == nullptr) { return 0; }
-	return _leftTopPoint->Distance(*_rightTopPoint);
+	return (*_leftTopPoint).Distance(*_rightTopPoint);
 }
 
-float Rectangle::GetleftSideLength()
+float Rectangle::GetLeftSideLength()
 {
 	if (_leftTopPoint == nullptr || _leftBottomPoint == nullptr) { return 0; }
-	return _leftTopPoint->Distance(*_leftBottomPoint); 
+	return (*_leftTopPoint).Distance(*_leftBottomPoint); 
+}
+
+#include <iostream>
+
+float Rectangle::GetDiagonalLength()
+{
+	if (_leftBottomPoint == nullptr || _rightTopPoint == nullptr) { return 0; }
+	return (*_leftBottomPoint).Distance(*_rightTopPoint);
 }
 
 void Rectangle::CreateRectangle(float width, float height)
@@ -31,16 +39,16 @@ void Rectangle::CreateRectangle(float width, float height)
 	right.Rotate(90);
 	left.Rotate(90);
 
-	// Get all points
+	// Get all points and update
 	_points.insert(_points.end(), top.GetPoints().begin(), top.GetPoints().end());
 	_points.insert(_points.end(), bottom.GetPoints().begin(), bottom.GetPoints().end());
 	_points.insert(_points.end(), left.GetPoints().begin(), left.GetPoints().end());
 	_points.insert(_points.end(), right.GetPoints().begin(), right.GetPoints().end());
 
 	// Update point values
-	_leftTopPoint = &top.GetPoints()[0];
-	_rightTopPoint = &top.GetPoints()[top.GetPoints().size() - 1];
-	_leftBottomPoint = &bottom.GetPoints()[0];
+	_leftTopPoint = &_points[0];
+	_rightTopPoint = &_points[top.GetPoints().size() - 1];
+	_leftBottomPoint = &_points[top.GetPoints().size()];
 
 	// Update center position
 	UpdateCenterPositionOfTheShape();

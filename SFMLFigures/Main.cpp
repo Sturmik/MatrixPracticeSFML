@@ -1,10 +1,9 @@
 #include <SFML/Graphics.hpp>
 
-#include "Circle.h"
-#include "Rectangle.h"
-#include "Leaf.h"
+#include "SnowflakeShape.h"
 
-// TEST PREPROCESSORS (Comment all else except the one you want to test)
+// TEST PREPROCESSORS (Comment all preprocessors except the one you want to test)
+
 #define TEST_SIMPLE_FIGURES
 //#define COMPLEX_FIGURE
 
@@ -153,5 +152,86 @@ int main()
     }
 #endif // COMPLEX_FIGURE
 #endif // TEST_SIMPLE_FIGURES
+
+#ifdef COMPLEX_FIGURE
+#ifndef TEST_SIMPLE_FIGURES
+    // Setting up render window
+    sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML Figure");
+    window.setFramerateLimit(60);
+    // Figures
+    SnowflakeShape snowflakeShape(250, 5);
+    snowflakeShape.SetPosition(sf::Vector2f(500, 400));
+    // Delta time
+    sf::Clock deltaClock;
+    sf::Time deltaTime = deltaClock.restart();
+    // Movement movementSpeed
+    float movementSpeed = 85;
+    float rotateSpeed = 45;
+    // Window cycle
+    while (window.isOpen())
+    {
+        // Updating delta time
+        deltaTime = deltaClock.restart();
+        // Working with events
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
+            if (event.type == sf::Event::Resized)
+            {
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
+            }
+            // Moving
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            {
+                snowflakeShape.Move(sf::Vector2f(0, -movementSpeed * deltaTime.asSeconds()));
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            {
+                snowflakeShape.Move(sf::Vector2f(0, movementSpeed * deltaTime.asSeconds()));
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            {
+                snowflakeShape.Move(sf::Vector2f(-movementSpeed * deltaTime.asSeconds(), 0));
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                snowflakeShape.Move(sf::Vector2f(movementSpeed * deltaTime.asSeconds(), 0));
+            }
+            // Rotating
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            {
+                snowflakeShape.Rotate(rotateSpeed * deltaTime.asSeconds());
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+            {
+                snowflakeShape.Rotate(-rotateSpeed * deltaTime.asSeconds());
+            }
+            // Scaling
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+            {
+                snowflakeShape.Scale(sf::Vector2f(1.1, 1.1));
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+            {
+                snowflakeShape.Scale(sf::Vector2f(0.9, 0.9));
+            }
+        }
+        // Window clear
+        window.clear();
+
+        // Draws figure
+        snowflakeShape.Draw(&window);
+
+        // Window display
+        window.display();
+    }
+#endif // !TEST_SIMPLE_FIGURES
+#endif // COMPLEX_FIGURE
+
     return 0;
 }

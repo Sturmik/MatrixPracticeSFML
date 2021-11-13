@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Line.h"
-
+#include <iostream>
 // Represents rectangle
 class Rectangle : public BaseShape
 {
@@ -16,11 +16,14 @@ public:
 	// Get rectangle top side length
 	float GetTopSideLength();
 	// Get rectangle left side length
-	float GetleftSideLength();
+	float GetLeftSideLength();
+	// Get diagonal length
+	float GetDiagonalLength();
 
 	// Constructor
 	Rectangle(float width, float height, float thickness)  : BaseShape(thickness)
 	{ 
+		_leftTopPoint = _rightTopPoint = _leftBottomPoint = nullptr;
 		if (width < 0) { width = 1; }
 		if (height < 0) { height = 1; }
 		CreateRectangle(width, height);
